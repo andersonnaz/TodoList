@@ -1,28 +1,52 @@
 const TaskRepository = require('../repositories/TaskRepository');
 
 const Task = {
-    create(request, response, next){
-        const { title, description, id_user} = request.body;
-        TaskRepository.create(title, description, id_user)
-        .then((result) => {
-            response.status(201).send('task created!');
-        }).catch((error) => {
-            console.log('error', error);
-            response.status(404).send('error, task cant be created!');
-        })
+    async create(request, response){
+        try {
+            const { title, description, id_user } = request.body;
+            const result = await TaskRepository.create(title, description, id_user);
+            response.status(201).json(result);
+        } catch (error) {
+            response.status(404).json({error: error});
+        }
     },
-    list(request, response, next){
-        console.log('list controller');
-        response.json(TaskRepository.list());
-    },
-    delete(){
+    async list(request, response){
+        try {
+            const tasks = await TaskRepository.list();
+            response.status(200).render('tasks/home', {tasks});
+        } catch (error) {
+            response.status(404).json({error: error});
+        }
 
     },
-    edit(){
+    async delete(request, response){
+        try {
+            const { id } = request.params;
+            const result = await TaskRepository.delete(id);
+            response.status(200).json(result);
+        } catch (error) {
+            response.status(404).json({error: error});
+        }
+    },
+    async edit(request, response){
+        try {
+            const id = request.params.id;
+            const body = request.body;
+            const result = await TaskRepository.edit(id, body);
+            response.status(200).json(result);
+        } catch (error) {
+            response.status(404).json({error: error});
+        }
 
     },
-    byId(){
-
+    async byId(request, response){
+        try {
+            const id = request.params.id;
+            const result = await TaskRepository.byId(id);
+            response.status(200).json(result);
+        } catch (error) {
+            response.status(404).json({error: error});
+        }
     }
 
 

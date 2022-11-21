@@ -1,34 +1,59 @@
 const database = require('../config/database');
 
 const Task = {
-    create(title, description, id_user){
-        const result = database('tasks').insert({
-            title,
-            description,
-            date: new Date(),
-            id_user,
-            done: false
-        });
-        console.log(result);
-        return result;
+    async create(title, description, id_user){
+        try {
+            const result = await database('tasks').insert({
+                title,
+                description,
+                date: new Date(),
+                id_user,
+                done: false
+            });
+            return result;    
+        } catch (error) {
+            return error;
+        }
     },
-    list(){
-        const result = database.select().from('tasks');
-        console.log('list repository');
-        console.log(typeof(result));
-        return result;
+    async list(){
+        try {
+            const result = await database.select()
+                .table('tasks');
+            return result;
+        } catch (error) {
+            return error;
+        }
     },
-    delete(request, response, next){
-        response.send('deletar tarefa')
+    async delete(id){
+        try {
+            const result = await database('tasks')
+                .where('id', id)
+                .del();
+            return result;
+        } catch (error) {
+            return error;
+        }
     },
-    edit(request, response, next){
-        response.send('editar tarefa');
+    async edit(id, body){
+        try {
+            const result = await database('tasks')
+                .where({'id': id})
+                .update(body)
+            return result;
+        } catch (error) {
+            return error;
+        }
     },
-    byId(request, response, next){
-        response.send('selecionar tarefa pelo id');
+    async byId(id){
+        try {
+            const result = await database('tasks')
+                .where({'id': id})
+                .select('*')
+            return result;
+        } catch (error) {
+            return error;
+        }
     }
-
-
 }
 
 module.exports = Task;
