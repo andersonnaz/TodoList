@@ -23,11 +23,11 @@ const User = {
             return error
         }
     },
-    async signin(email, password){
+    async signin(email){
         try {
             const result = await database('users')
                 .where({'email': email})
-                .where({'password': password})
+                .select('*')
             return result;
         } catch (error) {
             return error;

@@ -3,7 +3,8 @@ const TaskRepository = require('../repositories/TaskRepository');
 const Task = {
     async create(request, response){
         try {
-            const { title, description, id_user } = request.body;
+            const { title, description } = request.body;
+            const id_user = request.session.user.id;
             const result = await TaskRepository.create(title, description, id_user);
             response.status(201).json(result);
         } catch (error) {
