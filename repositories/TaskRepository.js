@@ -53,6 +53,16 @@ const Task = {
         } catch (error) {
             return error;
         }
+    },
+    async byUser(id){
+        try {
+            const result = await database('tasks')
+                .where({'id_user': id})
+                .select('*')
+            return result
+        } catch (error) {
+            return error;
+        }
     }
 }
 

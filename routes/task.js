@@ -3,11 +3,11 @@ const TaskController = require('../controllers/TaskController');
 const router = express.Router();
 const authentication = require('../middleware/Authentication');
 
-router.get('/', TaskController.list);
-router.post('/', TaskController.create);
-router.get('/:id', TaskController.byId);
-router.delete('/:id', TaskController.delete);
-router.put('/:id', TaskController.edit);
-
+router.get('/', authentication, TaskController.list);
+router.post('/', authentication, TaskController.create);
+router.get('/mytasks', authentication, TaskController.myTask);
+router.get('/:id', authentication, TaskController.byId);
+router.delete('/:id', authentication, TaskController.delete);
+router.put('/:id', authentication, TaskController.edit);
 
 module.exports = router;

@@ -17,5 +17,9 @@ router.get('/signup', (request, response) => {
     response.render('users/createUser');
 });
 
+router.get('/mytasks', (request, response) => {
+    response.redirect('/api/task/mytasks');
+});
+
 
 module.exports = router;

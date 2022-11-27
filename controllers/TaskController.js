@@ -6,9 +6,9 @@ const Task = {
             const { title, description } = request.body;
             const id_user = request.session.user.id;
             const result = await TaskRepository.create(title, description, id_user);
-            response.status(201).json(result);
-        } catch (error) {
-            response.status(404).json({error: error});
+            response.status(201).redirect('/create');
+        } catch (err) {
+            response.status(404).json({error: err});
         }
     },
     async list(request, response){
@@ -44,9 +44,18 @@ const Task = {
         try {
             const id = request.params.id;
             const result = await TaskRepository.byId(id);
-            response.status(200).json(result);
-        } catch (error) {
-            response.status(404).json({error: error});
+            response.status(201).json(result);
+        } catch (err) {
+            response.status(404).json({error: err});
+        }
+    },
+    async myTask(request, response){
+        try {
+            const { id, name } = request.session.user;
+            const tasks = await TaskRepository.byUser(id);
+            response.status(200).render('tasks/myTasks', {tasks, name});
+        } catch (err) {
+            response.status(404).json({error: err});
         }
     }
 

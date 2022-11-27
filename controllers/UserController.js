@@ -35,7 +35,7 @@ const User = {
                         name: user.name,
                         email: user.email
                     }
-                    response.status(200).redirect('/');
+                    response.status(200).redirect('/mytasks');
                 }else{
                     response.status(404).redirect('/user/login');    
                 }
@@ -48,7 +48,7 @@ const User = {
     },
     logout(request, response){
         request.session.user = undefined;
-        response.redirect('/user/login')
+        response.redirect('/login')
     }
 
 }
