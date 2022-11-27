@@ -1,0 +1,31 @@
+<%- include ('../partials/header.ejs'); %>
+<body>
+    <%- include ('../partials/navbar.ejs'); %>
+    <div class="container">
+        <br>
+        <div class="card">
+            <div class="card-body">
+                <h3> Usuário: <%= name %> </h3>
+                <hr>
+                <a class="btn btn-primary d-grid gap-2" href="/create">Nova tarefa</a>
+            </div>
+        </div>
+        <% tasks.forEach((task) => { %>
+            <br>
+            <div class="card">
+                <div class="card-body">
+                    <h4> <%= task.title %> </h4>
+                    <p> <%= task.description %> </p>
+                </div>
+                <div class="card-footer">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <button class="btn btn-success">Feito</button>
+                        <button class="btn btn-primary">Editar</button>
+                        <button class="btn btn-danger">Excluir</button>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</body>
+<%- include ('../partials/footer.ejs'); %>

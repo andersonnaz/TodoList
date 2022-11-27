@@ -1,1 +1,21 @@
-<h2>login</h2>
+<%- include ('../partials/header.ejs'); %>
+<body>
+    <div class="container" id="form-login">
+        <div class="card">
+            <div class="card-header">
+                <h2> <img src="/img/to-do-list.png"> Login  </h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/api/user/signin">
+                    <label>E-mail:</label>
+                    <input type="text" placeholder="digite seu e-mail" class="form-control" name="email">
+                    <br>
+                    <label>Senha:</label>
+                    <input type="password" placeholder="******" class="form-control" name="password"> <br>
+                    <button class="btn btn-success">Entrar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<%- include ('../partials/footer.ejs'); %>

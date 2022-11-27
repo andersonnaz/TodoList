@@ -1,0 +1,32 @@
+<%- include ('../partials/header.ejs'); %>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <a class="navbar-brand" href="/">
+            <img src="/img/to-do-list.png">
+        </a>
+    </nav>
+    <div class="container" id="form-create">
+        <div class="card">
+            <div class="card-header">
+                <h2> Registrar Usuário </h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/api/user/signup">
+                    <label>Nome:</label>
+                    <input type="text" placeholder="digite seu nome" class="form-control" name="name">
+                    <br><label>E-mail:</label>
+                    <input type="email" placeholder="exemplo@email.com" class="form-control" name="email"></input> <br>
+                    <label>Password:</label>
+                    <input type="password" placeholder="******" class="form-control" name="password"> <br>
+                    <button class="btn btn-success">Registrar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+<%- include ('../partials/footer.ejs'); %>
