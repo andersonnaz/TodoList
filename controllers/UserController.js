@@ -7,7 +7,7 @@ const User = {
             const { name, email, password } = request.body;
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
-            const result = await UserRepository.create(name, email, hash);
+            await UserRepository.create(name, email, hash);
             response.status(201).redirect('/user/signup');
         } catch (error) {
             response.status(400).send({error: error});
@@ -15,9 +15,8 @@ const User = {
     },
     async edit(request, response){
         try {
-            const { id } = request.params;
             const body = request.body;
-            const result = await UserRepository.edit(id, body);
+            const result = await UserRepository.edit(body);
             response.status(200).json(result);
         } catch (error) {
             response.status(400).send({error: error});

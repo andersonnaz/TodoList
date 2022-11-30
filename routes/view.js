@@ -6,7 +6,12 @@ router.get('/', (request, response) => {
 });
 
 router.get('/create', (request, response) => {
-    response.render('tasks/createTask');
+    const user = request.session.user;
+    response.render('tasks/createTask', {user});
+});
+
+router.get('/edit/:id', (request, response) => {
+    response.redirect(`/api/task/edit/${request.params.id}`);
 });
 
 router.get('/login', (request, response) => {

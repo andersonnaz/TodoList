@@ -1,0 +1,24 @@
+<%- include ('../partials/header.ejs'); %>
+<body>
+    <%- include ('../partials/navbar.ejs'); %>
+    <div class="container" id="form-create-task">
+        <br>
+        <div class="card">
+            <div class="card-header">
+                <h2>Editar Tarefa </h2>
+            </div>
+            <div class="card-body">
+                <form method="post" action="/api/task/edit">
+                    <label>Título:</label>
+                    <input type="text" placeholder="<%= task.title %>" value="<%= task.title %>" class="form-control" name="title">
+                    <br><label>Descrição:</label>
+                    <textarea placeholder="<%= task.description %>" value="<%= task.description %>" class="form-control" name="description"></textarea> <br>
+                    <input type="hidden" name="id" value="<%= task.id%> ">
+                    <button class="btn btn-success">Confirmar</button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</body>
+<%- include ('../partials/footer.ejs'); %>

@@ -19,9 +19,13 @@
                 </div>
                 <div class="card-footer">
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <button class="btn btn-success">Feito</button>
-                        <button class="btn btn-primary">Editar</button>
-                        <button class="btn btn-danger">Excluir</button>
+                        <form method="post" action="/api/task/done/<%= task.id %>">
+                            <button class="btn btn-success">Feito</button>
+                        </form>
+                        <a class="btn btn-primary" href="/edit/<%= task.id %>" >Editar</a>
+                        <form method="post" action="/api/task/delete/<%= task.id %>" >
+                            <button class="btn btn-danger">Excluir</button>
+                        </form>
                     </div>
                 </div>
             </div>

@@ -5,6 +5,7 @@ const Task = {
         try {
             const { title, description } = request.body;
             const id_user = request.session.user.id;
+            console.log(request.body);
             const result = await TaskRepository.create(title, description, id_user);
             response.status(201).redirect('/create');
         } catch (err) {
@@ -23,28 +24,27 @@ const Task = {
     async delete(request, response){
         try {
             const { id } = request.params;
-            const result = await TaskRepository.delete(id);
-            response.status(200).json(result);
-        } catch (error) {
-            response.status(404).json({error: error});
+            await TaskRepository.delete(id);
+            response.status(200).redirect('/mytasks');
+        } catch (err) {
+            response.status(404).json({error: err});
         }
     },
     async edit(request, response){
         try {
-            const id = request.params.id;
             const body = request.body;
-            const result = await TaskRepository.edit(id, body);
-            response.status(200).json(result);
-        } catch (error) {
-            response.status(404).json({error: error});
+            await TaskRepository.edit(body);
+            response.status(200).redirect('/mytasks');
+        } catch (err) {
+            response.status(404).json({error: err});
         }
 
     },
-    async byId(request, response){
+    async done(request, response){
         try {
             const id = request.params.id;
-            const result = await TaskRepository.byId(id);
-            response.status(201).json(result);
+            const result = await TaskRepository.done(id);
+            response.status(200).redirect('/mytasks');
         } catch (err) {
             response.status(404).json({error: err});
         }
@@ -54,6 +54,15 @@ const Task = {
             const { id, name } = request.session.user;
             const tasks = await TaskRepository.byUser(id);
             response.status(200).render('tasks/myTasks', {tasks, name});
+        } catch (err) {
+            response.status(404).json({error: err});
+        }
+    },
+    async renderEditTaskPage(request, response){
+        try {
+            const id = request.params.id;
+            const [task] = await TaskRepository.byId(id);
+            response.render('tasks/editTask', {task});
         } catch (err) {
             response.status(404).json({error: err});
         }

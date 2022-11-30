@@ -17,8 +17,11 @@ const Task = {
     },
     async list(){
         try {
-            const result = await database.select()
-                .table('tasks');
+            const result = await database('tasks')
+                .where({'done': false})
+                .select('*')
+            // const result = await database.select()
+            //     .table('tasks');
             return result;
         } catch (error) {
             return error;
@@ -34,10 +37,10 @@ const Task = {
             return error;
         }
     },
-    async edit(id, body){
+    async edit(body){
         try {
             const result = await database('tasks')
-                .where({'id': id})
+                .where({'id': body.id})
                 .update(body)
             return result;
         } catch (error) {
@@ -58,8 +61,19 @@ const Task = {
         try {
             const result = await database('tasks')
                 .where({'id_user': id})
+                .where({'done': false})
                 .select('*')
             return result
+        } catch (error) {
+            return error;
+        }
+    },
+    async done(id){
+        try {
+            const result = await database('tasks')
+                .where({'id': id})
+                .update({'done': true})
+            return result;
         } catch (error) {
             return error;
         }
