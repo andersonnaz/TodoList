@@ -4,9 +4,10 @@ const User = {
     async create(name, email, password){
         try {
             const result = await database('users').insert({
-                name,
                 email,
-                password
+                name,
+                password,
+                admin: false
             })
             return result;    
         } catch (error) {
@@ -28,6 +29,25 @@ const User = {
             const result = await database('users')
                 .where({'email': email})
                 .select('*')
+            return result;
+        } catch (error) {
+            return error;
+        }
+    },
+    async list(){
+        try{
+            const result = await database('users')
+                .select('*')
+            return result;
+        }catch (error){
+            return error;
+        }
+    },
+    async delete(id){
+        try {
+            const result = await database('users')
+                .where({'id': id})
+                .del()
             return result;
         } catch (error) {
             return error;

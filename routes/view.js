@@ -26,5 +26,9 @@ router.get('/mytasks', (request, response) => {
     response.redirect('/api/task/mytasks');
 });
 
+router.get('/users', (request, response) => {
+    response.redirect('/api/user/');
+});
+
 
 module.exports = router;

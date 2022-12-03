@@ -8,7 +8,7 @@ const User = {
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(password, salt);
             await UserRepository.create(name, email, hash);
-            response.status(201).redirect('/user/signup');
+            response.status(201).redirect('/login');
         } catch (error) {
             response.status(400).send({error: error});
         }
@@ -18,8 +18,8 @@ const User = {
             const body = request.body;
             const result = await UserRepository.edit(body);
             response.status(200).json(result);
-        } catch (error) {
-            response.status(400).send({error: error});
+        } catch (err) {
+            response.status(400).send({error: err});
         }
     },
     async signin(request, response){
@@ -32,7 +32,8 @@ const User = {
                     request.session.user = {
                         id: user.id,
                         name: user.name,
-                        email: user.email
+                        email: user.email,
+                        admin: user.admin
                     }
                     response.status(200).redirect('/mytasks');
                 }else{
@@ -48,6 +49,23 @@ const User = {
     logout(request, response){
         request.session.user = undefined;
         response.redirect('/login')
+    },
+    async list(request, response){
+        try {
+            const users = await UserRepository.list();
+            response.status(200).render('users/allUsers', {users});
+        } catch (err) {
+            response.status(400).send({error: err})
+        }
+    },
+    async delete(request, response) {
+        try {
+            const id = request.params.id;
+            await UserRepository.delete(id);
+            response.status(200).redirect('/users');
+        } catch (error) {
+            response.status(400).send({error: err});
+        }
     }
 
 }
